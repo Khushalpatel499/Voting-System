@@ -55,3 +55,4 @@ You should see your voting form displayed in the browser.
 Cast some votes and verify that the results are displayed correctly.
 
 ![alt text](image.png)
+![alt text](image-1.png)
