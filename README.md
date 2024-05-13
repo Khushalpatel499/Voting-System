@@ -53,3 +53,5 @@ Access Your Voting System:
 Open a web browser and navigate to http://localhost:<port> (replace <port> with the port number your server is running on).
 You should see your voting form displayed in the browser.
 Cast some votes and verify that the results are displayed correctly.
+
+![alt text](image.png)
