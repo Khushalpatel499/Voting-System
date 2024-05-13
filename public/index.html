@@ -4,19 +4,35 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Voting System</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="main.js" defer></script>
   </head>
   <body>
-    <h1>Vote for an Option</h1>
-    <form id="votingForm">
-      <input type="radio" name="option" value="1" /> Option 1 - Vegetarian<br />
-      <input type="radio" name="option" value="2" /> Option 2 -
-      Non-Vegetarian<br />
-      <input type="button" value="Submit" onclick="submitVote()" />
-    </form>
-
-    <h2>Voting Results</h2>
-    <div id="results"></div>
-
-    <script src="main.js"></script>
+    <div class="container">
+      <h2>Are you a Vegetarian or Non-Vegetarian?</h2>
+      <form id="votingForm">
+        <div class="option">
+          <input type="radio" id="option1" name="vote" value="vegetarian" />
+          <label for="option1">Vegetarian</label>
+        </div>
+        <div class="option">
+          <input type="radio" id="option2" name="vote" value="non-vegetarian" />
+          <label for="option2">Non-Vegetarian</label>
+        </div>
+        <button type="button" onclick="submitVote(event)">Submit</button>
+      </form>
+      <div id="results" class="results-container">
+        <h3>Current Results</h3>
+        <p>Total Responses: <span id="totalResponses"></span></p>
+        <p>
+          Responses for Option 1 (Vegetarian):
+          <span id="option1Responses"></span>
+        </p>
+        <p>
+          Responses for Option 2 (Non-Vegetarian):
+          <span id="option2Responses"></span>
+        </p>
+      </div>
+    </div>
   </body>
 </html>

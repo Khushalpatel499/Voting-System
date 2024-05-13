@@ -1,52 +1,51 @@
-function submitVote() {
-  var selectedOption = document.querySelector(
-    'input[name="option"]:checked'
-  ).value;
+// main.js
 
-  fetch("/vote", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ option: selectedOption }),
-  })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Failed to submit vote");
-      }
-      return response.text();
+function submitVote(event) {
+  event.preventDefault();
+
+  const selectedOption = document.querySelector('input[name="vote"]:checked');
+  if (selectedOption) {
+    fetch("http://localhost:3000/vote", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ option: selectedOption.value }),
     })
-    .then((data) => {
-      console.log(data); // Log the server response
-      updateResults();
-    })
-    .catch((error) => {
-      console.error("Error submitting vote:", error);
-    });
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+        displayResults();
+        // Display results immediately after submitting vote
+      })
+      .catch((error) => {
+        console.error(error);
+        alert("Failed to submit vote");
+      });
+  } else {
+    alert("Please select an option to vote.");
+  }
 }
 
-function updateResults() {
-  fetch("/results")
+function displayResults() {
+  fetch("http://localhost:3000/results")
     .then((response) => response.json())
     .then((data) => {
-      var resultHTML = "<p>Total Responses: " + data.total_responses + "</p>";
-      resultHTML += "<ul>";
-      data.results.forEach(function (option) {
-        resultHTML +=
-          "<li>Responses for Option " +
-          option.option +
-          ": " +
-          option.count +
-          "</li>";
-      });
-      resultHTML += "</ul>";
-
-      document.getElementById("results").innerHTML = resultHTML;
+      document.getElementById("totalResponses").textContent =
+        data.totalResponses;
+      document.getElementById("option1Responses").textContent =
+        data.option1Responses;
+      document.getElementById("option2Responses").textContent =
+        data.option2Responses;
+      document.getElementById("results").style.display = "block";
     })
     .catch((error) => {
-      console.error("Error fetching results:", error);
+      console.error(error);
+      alert("Failed to fetch results");
     });
 }
-
-// Fetch initial results when the page loads
-updateResults();
